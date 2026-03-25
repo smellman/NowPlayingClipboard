@@ -13,6 +13,14 @@ NowPlaying is a simple menu bar app for macOS that shows you what's currently pl
 
 Download this repository and open `NowPlaying.xcodeproj` in Xcode. Build and run the project to launch the app.
 
+```bash
+cd /Users/btm/develop/mac/NowPlayingClipboard/NowPlayingClipboard
+xcodebuild -scheme NowPlayingClipboard -configuration Release build
+pkill -f NowPlaying
+cp -R ~/Library/Developer/Xcode/DerivedData/NowPlayingClipboard-*/Build/Products/Release/NowPlayingClipboard.app /Applications/NowPlaying.app
+open /Applications/NowPlaying.app
+```
+
 ## Notes
 
 - This app's identifier is 'com.apple.nowplaying', to pass `mediaremoted`'s check for Apple Music. However, this is not an official Apple app and may not work with all features of Apple Music or other music players. 
