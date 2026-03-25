@@ -8,43 +8,17 @@
 import AppKit
 import Foundation
 
-private let handle = dlopen(
-    "/System/Library/PrivateFrameworks/MediaRemote.framework/MediaRemote",
-    RTLD_NOW
-)
-
-private typealias GetNowPlayingInfoFunc =
-    @convention(c) (DispatchQueue, @escaping (CFDictionary) -> Void) -> Void
-
-private typealias RegisterForNowPlayingNotificationsFunc =
-    @convention(c) (DispatchQueue) -> Void
-
-private let MRGetNowPlaying: GetNowPlayingInfoFunc? = {
-    guard let handle,
-          let sym = dlsym(handle, "MRMediaRemoteGetNowPlayingInfo")
-    else { return nil }
-    return unsafeBitCast(sym, to: GetNowPlayingInfoFunc.self)
-}()
-
-private let MRRegisterForNowPlayingNotifications: RegisterForNowPlayingNotificationsFunc? = {
-    guard let handle,
-          let sym = dlsym(handle, "MRMediaRemoteRegisterForNowPlayingNotifications")
-    else { return nil }
-    return unsafeBitCast(sym, to: RegisterForNowPlayingNotificationsFunc.self)
-}()
-
 func registerNowPlaying() {
-    MRRegisterForNowPlayingNotifications?(.main)
+    MRMediaRemoteRegisterForNowPlayingNotifications(.main)
 }
 
 func getNowPlaying() async -> String? {
-    guard let MRGetNowPlaying else { return nil }
     return await withCheckedContinuation { continuation in
-        MRGetNowPlaying(.main) { info in
-            let dict = info as NSDictionary
-            guard let title = dict["kMRMediaRemoteNowPlayingInfoTitle"] as? String,
-                  let artist = dict["kMRMediaRemoteNowPlayingInfoArtist"] as? String,
-                  let album = dict["kMRMediaRemoteNowPlayingInfoAlbum"] as? String
+        MRMediaRemoteGetNowPlayingInfo(.main) { info in
+            guard let dict = info as? [String: Any],
+                  let title = dict[kMRMediaRemoteNowPlayingInfoTitle] as? String,
+                  let artist = dict[kMRMediaRemoteNowPlayingInfoArtist] as? String,
+                  let album = dict[kMRMediaRemoteNowPlayingInfoAlbum] as? String
             else {
                 continuation.resume(returning: nil)
                 return

@@ -265,8 +265,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				OTHER_LDFLAGS = "";
+				FRAMEWORK_SEARCH_PATHS = "/System/Library/PrivateFrameworks";
+				OTHER_LDFLAGS = "-framework MediaRemote";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.NowPlayingClipboard;
+				SWIFT_OBJC_BRIDGING_HEADER = "NowPlayingClipboard/MediaRemote-Bridging-Header.h";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -298,8 +300,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				OTHER_LDFLAGS = "";
+				FRAMEWORK_SEARCH_PATHS = "/System/Library/PrivateFrameworks";
+				OTHER_LDFLAGS = "-framework MediaRemote";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.NowPlayingClipboard;
+				SWIFT_OBJC_BRIDGING_HEADER = "NowPlayingClipboard/MediaRemote-Bridging-Header.h";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
